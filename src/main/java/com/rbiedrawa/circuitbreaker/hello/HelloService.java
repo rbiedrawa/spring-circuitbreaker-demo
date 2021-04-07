@@ -2,6 +2,7 @@ package com.rbiedrawa.circuitbreaker.hello;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.function.Function;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class HelloService {
 	private static final String CB_SAY_HELLO = "sayHello";
 	private static final String CB_SUCCESS = "success";
 
+	// TODO: make better examples
 	@TimeLimiter(name = CB_SAY_HELLO)
 	@Retry(name = CB_SAY_HELLO)
 	@CircuitBreaker(name = CB_SAY_HELLO, fallbackMethod = "sayHelloFallback")
@@ -27,12 +29,8 @@ public class HelloService {
 		var seconds = (long) (Math.random() * 5);
 
 		return name
-			.map(str -> {
-				var msg = String.format("Hello %s! (in %d)", str, seconds);
-				log.info(msg);
-				return Mono.just(msg);
-			})
-			.orElse(Mono.error(new NullPointerException("Missing name parameter!!!")))
+			.map(remoteCall(seconds))
+			.orElse(Mono.error(new RuntimeException("Missing name parameter!!!")))
 			.delayElement(Duration.ofSeconds(seconds));
 	}
 
@@ -41,8 +39,16 @@ public class HelloService {
 		return Mono.just("Success");
 	}
 
-	private Mono<String> sayHelloFallback(Exception ex) {
-		log.info("Recovered from {}", ex.getMessage());
+	public Mono<String> sayHelloFallback(Exception ex) {
+		log.info("Recovered from failure {}", ex.getMessage());
 		return Mono.just("Hello World!");
+	}
+
+	private Function<String, Mono<String>> remoteCall(long delayInSeconds) {
+		return str -> {
+			var msg = String.format("Hello %s! (completed in %d sec.)", str, delayInSeconds);
+			log.info("Remote call: {}", msg);
+			return Mono.just(msg);
+		};
 	}
 }

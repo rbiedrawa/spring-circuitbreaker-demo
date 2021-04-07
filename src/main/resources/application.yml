@@ -36,12 +36,16 @@ resilience4j:
   #        - org.springframework.web.client.HttpServerErrorException
   #      ignoreExceptions:
   #        - com.rbiedrawa.circuitbreaker.exceptions.RetryableException
-
+    instances:
+      sayHello:
+        baseConfig: default
   retry:
     configs:
       default:
         maxRetryAttempts: 3
         waitDuration: 100
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
         retryExceptions:
           - java.util.concurrent.TimeoutException
     instances:
