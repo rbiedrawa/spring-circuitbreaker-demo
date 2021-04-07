@@ -1,4 +1,4 @@
-# Spring Circuit Breaker (resilience4j demo)
+# Spring Boot Circuit Breaker (resilience4j demo)
 
 This repository demonstrates how to build fault-tolerant application and apply resiliency patterns using Resilience4j.
 
