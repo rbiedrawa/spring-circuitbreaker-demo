@@ -51,7 +51,7 @@ Build docker image.
   # prometheus            /bin/prometheus --config.f ...   Up (healthy)   0.0.0.0:9090->9090/tcp
   ```
 
-* Generate website traffic using [Apache Benchmark]((https://httpd.apache.org/docs/2.4/programs/ab.html)) tool.
+* Generate website traffic using [Apache Benchmark](https://httpd.apache.org/docs/2.4/programs/ab.html) tool.
   ```shell
   # Circuit Breaker - `sayHello`
   ab -t 60 -c 20 http://localhost:8080/api/hello?name=ab_test
