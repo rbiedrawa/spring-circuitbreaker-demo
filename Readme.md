@@ -16,7 +16,7 @@ This repository demonstrates how to build fault-tolerant application and apply r
 
 ## Getting Started
 
-### Prerequisite
+### Prerequisites
 
 * Java 11
 * Docker
