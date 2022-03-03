@@ -60,7 +60,7 @@ Build docker image.
   ab -t 30 -c 10 http://localhost:8080/api/hello/success
   ```
 
-* Open your web browser and go to Grafana [login page](http://localhost:3000/). On the login page, enter `admin` for a
+* Open your web browser and go to Grafana [login page](http://localhost:3000/). Inside the login page, enter `admin` for a
   username and password.
 
 * Open `demo/Resilience4j` dashboard. You should be able to see circuit breaker metrics as shown below:
